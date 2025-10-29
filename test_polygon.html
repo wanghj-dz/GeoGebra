@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>GeoGebra Polygon 命令测试</title>
+    <script src="deployggb.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        h1 {
+            color: white;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 15px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button.danger {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .code-display {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            border-radius: 5px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .test-section h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        #ggb-element {
+            margin-top: 20px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔬 GeoGebra Polygon 命令测试</h1>
+    
+    <div class="container">
+        <div class="test-section">
+            <h3>📐 方法1：Polygon(点名, 点名, 点名)</h3>
+            <div class="button-group">
+                <button onclick="test1()">测试三角形 - 方法1</button>
+                <button onclick="test2()">测试四边形 - 方法1</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 方法2：Polygon({点列表})</h3>
+            <div class="button-group">
+                <button onclick="test3()">测试三角形 - 方法2</button>
+                <button onclick="test4()">测试四边形 - 方法2</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📏 方法3：Polygon(点, 点, 边数) - 正多边形</h3>
+            <div class="button-group">
+                <button onclick="test5()">测试正五边形</button>
+                <button onclick="test6()">测试正六边形</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>✏️ 方法4：Segment连线</h3>
+            <div class="button-group">
+                <button onclick="test7()">测试三角形 - Segment</button>
+                <button onclick="test8()">测试四边形 - Segment</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 方法5：直接坐标Polygon</h3>
+            <div class="button-group">
+                <button onclick="test9()">测试三角形 - 直接坐标</button>
+                <button onclick="test10()">测试四边形 - 直接坐标</button>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="danger" onclick="clearAll()">清除所有对象</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 当前执行的代码：</h3>
+            <div class="code-display" id="code-display">等待测试...</div>
+        </div>
+        
+        <div id="ggb-element"></div>
+    </div>
+    
+    <script>
+        var ggbApp = null;
+        
+        // 初始化GeoGebra
+        window.addEventListener("load", function() {
+            var params = {
+                "appName": "graphing",
+                "width": 1000,
+                "height": 600,
+                "showToolBar": true,
+                "showAlgebraInput": true,
+                "showMenuBar": true,
+                "enableShiftDragZoom": true,
+                "appletOnLoad": function(api) {
+                    ggbApp = api;
+                    console.log("GeoGebra已加载完成");
+                }
+            };
+            
+            var applet = new GGBApplet(params, true);
+            applet.inject('ggb-element');
+        });
+        
+        // 执行命令的通用函数
+        function executeCommands(commands) {
+            if (!ggbApp) {
+                alert("GeoGebra还未加载完成，请稍候再试！");
+                return;
+            }
+            
+            // 显示代码
+            document.getElementById('code-display').textContent = commands.join('\n');
+            
+            // 执行每个命令
+            commands.forEach(function(cmd, index) {
+                setTimeout(function() {
+                    try {
+                        console.log("执行命令: " + cmd);
+                        ggbApp.evalCommand(cmd);
+                    } catch(e) {
+                        console.error("命令执行失败: " + cmd, e);
+                        alert("命令执行失败: " + cmd + "\n错误: " + e.message);
+                    }
+                }, index * 200);
+            });
+        }
+        
+        // 清除所有对象
+        function clearAll() {
+            if (ggbApp) {
+                ggbApp.reset();
+                document.getElementById('code-display').textContent = "已清除所有对象";
+            }
+        }
+        
+        // 测试1: Polygon(A, B, C)
+        function test1() {
+            var commands = [
+                "A = (0, 0)",
+                "B = (4, 0)",
+                "C = (2, 3)",
+                "Polygon(A, B, C)"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 测试2: Polygon(P1, P2, P3, P4)
+        function test2() {
+            var commands = [
+                "P1 = (-2, -2)",
+                "P2 = (2, -2)",
+                "P3 = (2, 2)",
+                "P4 = (-2, 2)",
+                "Polygon(P1, P2, P3, P4)"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 测试3: Polygon({点列表})
+        function test3() {
+            var commands = [
+                "Polygon({(0, 0), (4, 0), (2, 3)})"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 测试4: Polygon({点列表}) - 四边形
+        function test4() {
+            var commands = [
+                "Polygon({(-2, -2), (2, -2), (2, 2), (-2, 2)})"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 测试5: Polygon(点, 点, 边数) - 正五边形
+        function test5() {
+            var commands = [
+                "A = (0, 0)",
+                "B = (3, 0)",
+                "Polygon(A, B, 5)"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 测试6: Polygon(点, 点, 边数) - 正六边形
+        function test6() {
+            var commands = [
+                "A = (0, 0)",
+                "B = (2, 0)",
+                "Polygon(A, B, 6)"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 测试7: Segment连线 - 三角形
+        function test7() {
+            var commands = [
+                "A = (0, 0)",
+                "B = (4, 0)",
+                "C = (2, 3)",
+                "Segment(A, B)",
+                "Segment(B, C)",
+                "Segment(C, A)"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 测试8: Segment连线 - 四边形
+        function test8() {
+            var commands = [
+                "P1 = (-2, -2)",
+                "P2 = (2, -2)",
+                "P3 = (2, 2)",
+                "P4 = (-2, 2)",
+                "Segment(P1, P2)",
+                "Segment(P2, P3)",
+                "Segment(P3, P4)",
+                "Segment(P4, P1)"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 测试9: 直接坐标Polygon - 三角形
+        function test9() {
+            var commands = [
+                "Polygon((0, 0), (4, 0), (2, 3))"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 测试10: 直接坐标Polygon - 四边形
+        function test10() {
+            var commands = [
+                "Polygon((-2, -2), (2, -2), (2, 2), (-2, 2))"
+            ];
+            executeCommands(commands);
+        }
+    </script>
+</body>
+</html>

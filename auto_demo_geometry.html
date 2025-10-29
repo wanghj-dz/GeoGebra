@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoGebra 函数自动化演示</title>
+    <title>GeoGebra 几何图形自动化演示</title>
     <script src="deployggb.js"></script>
     <style>
         body {
@@ -32,7 +31,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         .intro {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             padding: 20px;
             border-radius: 10px;
@@ -113,91 +112,70 @@
             font-size: 20px;
         }
         .tip {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        .tip strong {
-            color: #1976D2;
-        }
-        .link-section {
             background: #fff3cd;
             border-left: 4px solid #ffc107;
             padding: 15px;
             margin: 20px 0;
             border-radius: 5px;
         }
-        .link-section a {
+        .tip strong {
             color: #856404;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .link-section a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>📈 GeoGebra 函数自动化演示</h1>
-    <p class="subtitle">使用 Graphing 模式 - 专注于函数和代数</p>
+    <h1>🔷 GeoGebra 几何图形自动化演示</h1>
+    <p class="subtitle">使用 Geometry 模式 - 支持完整的几何命令</p>
     
     <div class="container">
         <div class="intro">
-            <h2>✨ 函数模式特性</h2>
-            <p>📊 本页面使用 <strong>graphing</strong> 模式，专注于函数绘制和代数运算</p>
+            <h2>✨ 几何模式特性</h2>
+            <p>📐 本页面使用 <strong>geometry</strong> 模式，支持完整的几何命令</p>
             <p>🚀 点击按钮，代码自动输入并执行，无需手动操作</p>
-            <p>🎯 支持各种函数、动态参数、滑块等功能</p>
-        </div>
-
-        <div class="link-section">
-            <strong>🔷 需要绘制几何图形？</strong>
-            请访问 <a href="auto_demo_geometry.html">几何图形演示页面</a>，
-            该页面使用 geometry 模式，支持 Polygon、Segment、Circle 等几何命令。
+            <p>🎯 支持 Polygon、Segment、Circle 等所有几何命令</p>
         </div>
 
         <div class="demo-section">
-            <h3>📈 基础函数</h3>
+            <h3>📐 基础多边形 - Polygon 命令</h3>
             <div class="button-grid">
-                <button onclick="demo1()">📐 绘制抛物线 y = x²</button>
-                <button onclick="demo2()">🌊 绘制正弦函数 sin(x)</button>
-                <button onclick="demo3()">📊 绘制多个函数</button>
+                <button onclick="demo1()">🔺 创建三角形</button>
+                <button onclick="demo2()">🔷 创建正方形</button>
+                <button onclick="demo3()">⬟ 创建正五边形</button>
+                <button onclick="demo4()">⬡ 创建正六边形</button>
             </div>
         </div>
 
         <div class="demo-section">
-            <h3>🎛️ 动态函数（带滑块）</h3>
+            <h3>⭕ 圆形和椭圆</h3>
             <div class="button-grid">
-                <button onclick="demo4()">🎚️ 动态抛物线 y = ax²</button>
-                <button onclick="demo5()">🔄 动态正弦 y = a·sin(bx)</button>
-                <button onclick="demo6()">📉 动态直线 y = ax + b</button>
+                <button onclick="demo5()">⭕ 创建圆形</button>
+                <button onclick="demo6()">🔵 创建多个圆</button>
+                <button onclick="demo7()">⚪ 创建同心圆</button>
             </div>
         </div>
 
         <div class="demo-section">
-            <h3>🎨 函数族和艺术</h3>
+            <h3>📏 线段和连线</h3>
             <div class="button-grid">
-                <button onclick="demo7()">🌈 函数族</button>
-                <button onclick="demo8()">🎨 数学艺术图案</button>
-                <button onclick="demo9()">🌀 三角函数组合</button>
+                <button onclick="demo8()">📏 创建线段</button>
+                <button onclick="demo9()">✏️ 三角形（线段）</button>
+                <button onclick="demo10()">🎨 星形图案</button>
             </div>
         </div>
 
         <div class="demo-section">
-            <h3>📍 点和标记</h3>
+            <h3>🎯 综合演示</h3>
             <div class="button-grid">
-                <button onclick="demo10()">📍 创建多个点</button>
-                <button onclick="demo11()">⭐ 点阵图案</button>
+                <button onclick="demo11()">🌟 几何艺术</button>
+                <button onclick="demo12()">🎨 彩色多边形</button>
                 <button class="clear" onclick="clearAll()">🗑️ 清除所有对象</button>
             </div>
         </div>
 
         <div class="tip">
             <strong>💡 提示：</strong>
-            本页面使用 <code>graphing</code> 模式，专注于函数和代数。
-            如需绘制几何图形（三角形、多边形、线段等），请访问
-            <a href="auto_demo_geometry.html" style="color: #1976D2;">几何图形演示页面</a>。
+            本页面使用 <code>geometry</code> 模式，与 <code>graphing</code> 模式不同。
+            <code>graphing</code> 模式不支持 Polygon 和 Segment 命令，只能绘制函数。
         </div>
 
         <div class="code-section">
@@ -211,10 +189,10 @@
     <script>
         var ggbApp = null;
         
-        // 初始化GeoGebra - 使用graphing模式
+        // 初始化GeoGebra - 使用geometry模式
         window.addEventListener("load", function() {
             var params = {
-                "appName": "graphing",  // 使用graphing模式
+                "appName": "geometry",  // 关键：使用geometry模式
                 "width": 1000,
                 "height": 600,
                 "showToolBar": true,
@@ -223,8 +201,8 @@
                 "enableShiftDragZoom": true,
                 "appletOnLoad": function(api) {
                     ggbApp = api;
-                    console.log("GeoGebra Graphing 模式已加载完成");
-                    document.getElementById('code-display').textContent = "✅ GeoGebra Graphing 模式已就绪\n现在可以绘制各种函数和进行代数运算！";
+                    console.log("GeoGebra Geometry 模式已加载完成");
+                    document.getElementById('code-display').textContent = "✅ GeoGebra Geometry 模式已就绪\n现在可以使用 Polygon、Segment、Circle 等所有几何命令！";
                 }
             };
             
@@ -264,121 +242,157 @@
             }
         }
         
-        // 演示1: 绘制抛物线
+        // 演示1: 创建三角形
         function demo1() {
             var commands = [
-                "f(x) = x^2"
+                "A = (0, 0)",
+                "B = (4, 0)",
+                "C = (2, 3)",
+                "Polygon(A, B, C)"
             ];
             executeCommands(commands);
         }
         
-        // 演示2: 绘制正弦函数
+        // 演示2: 创建正方形
         function demo2() {
             var commands = [
-                "f(x) = sin(x)"
+                "P1 = (-2, -2)",
+                "P2 = (2, -2)",
+                "P3 = (2, 2)",
+                "P4 = (-2, 2)",
+                "Polygon(P1, P2, P3, P4)"
             ];
             executeCommands(commands);
         }
         
-        // 演示3: 绘制多个函数
+        // 演示3: 创建正五边形
         function demo3() {
             var commands = [
-                "f(x) = x^2",
-                "g(x) = 2*x + 1",
-                "h(x) = -x^2 + 3"
+                "A = (0, 0)",
+                "B = (3, 0)",
+                "Polygon(A, B, 5)"
             ];
             executeCommands(commands);
         }
         
-        // 演示4: 动态抛物线
+        // 演示4: 创建正六边形
         function demo4() {
             var commands = [
-                "a = Slider(-5, 5, 0.1, 1, 150, false, true, false, false)",
-                "f(x) = a*x^2"
+                "A = (0, 0)",
+                "B = (2, 0)",
+                "Polygon(A, B, 6)"
             ];
             executeCommands(commands);
         }
         
-        // 演示5: 动态正弦函数
+        // 演示5: 创建圆形
         function demo5() {
             var commands = [
-                "a = Slider(0.1, 3, 0.1, 1, 150, false, true, false, false)",
-                "b = Slider(0.1, 3, 0.1, 1, 150, false, true, false, false)",
-                "f(x) = a*sin(b*x)"
+                "O = (0, 0)",
+                "Circle(O, 3)"
             ];
             executeCommands(commands);
         }
         
-        // 演示6: 动态直线
+        // 演示6: 创建多个圆
         function demo6() {
             var commands = [
-                "a = Slider(-5, 5, 0.1, 1, 150, false, true, false, false)",
-                "b = Slider(-5, 5, 0.1, 0, 150, false, true, false, false)",
-                "f(x) = a*x + b"
+                "O1 = (-3, 0)",
+                "O2 = (0, 0)",
+                "O3 = (3, 0)",
+                "Circle(O1, 1.5)",
+                "Circle(O2, 1.5)",
+                "Circle(O3, 1.5)"
             ];
             executeCommands(commands);
         }
         
-        // 演示7: 函数族
+        // 演示7: 创建同心圆
         function demo7() {
             var commands = [
-                "f(x) = x^2",
-                "g(x) = x^2 + 1",
-                "h(x) = x^2 + 2",
-                "i(x) = x^2 + 3",
-                "j(x) = x^2 - 1",
-                "k(x) = x^2 - 2"
+                "O = (0, 0)",
+                "Circle(O, 1)",
+                "Circle(O, 2)",
+                "Circle(O, 3)",
+                "Circle(O, 4)"
             ];
             executeCommands(commands);
         }
         
-        // 演示8: 数学艺术图案
+        // 演示8: 创建线段
         function demo8() {
             var commands = [
-                "f(x) = sin(x)",
-                "g(x) = cos(x)",
-                "h(x) = sin(2*x)",
-                "i(x) = cos(2*x)",
-                "j(x) = sin(x) + cos(x)"
+                "A = (-3, -2)",
+                "B = (3, 2)",
+                "C = (-3, 2)",
+                "D = (3, -2)",
+                "Segment(A, B)",
+                "Segment(C, D)"
             ];
             executeCommands(commands);
         }
         
-        // 演示9: 三角函数组合
+        // 演示9: 三角形（使用线段）
         function demo9() {
             var commands = [
-                "f(x) = sin(x)",
-                "g(x) = sin(2*x)/2",
-                "h(x) = sin(3*x)/3",
-                "i(x) = f(x) + g(x) + h(x)"
+                "A = (0, 0)",
+                "B = (4, 0)",
+                "C = (2, 3)",
+                "Segment(A, B)",
+                "Segment(B, C)",
+                "Segment(C, A)"
             ];
             executeCommands(commands);
         }
         
-        // 演示10: 创建多个点
+        // 演示10: 星形图案
         function demo10() {
             var commands = [
-                "A = (0, 0)",
-                "B = (2, 3)",
-                "C = (-2, 3)",
-                "D = (4, -1)",
-                "E = (-4, -1)"
+                "O = (0, 0)",
+                "A = (0, 3)",
+                "B = (3, 0)",
+                "C = (0, -3)",
+                "D = (-3, 0)",
+                "Segment(A, C)",
+                "Segment(B, D)",
+                "Segment(A, B)",
+                "Segment(B, C)",
+                "Segment(C, D)",
+                "Segment(D, A)"
             ];
             executeCommands(commands);
         }
         
-        // 演示11: 点阵图案
+        // 演示11: 几何艺术
         function demo11() {
             var commands = [
-                "A1 = (-3, 3)",
-                "A2 = (0, 3)",
-                "A3 = (3, 3)",
-                "B1 = (-3, 0)",
-                "B2 = (0, 0)",
-                "B3 = (3, 0)",
-                "C1 = (-3, -3)",
-                "C2 = (0, -3)",
-                "C3 = (3, -3)"
+                "O = (0, 0)",
+                "Circle(O, 4)",
+                "A = (0, 0)",
+                "B = (3, 0)",
+                "Polygon(A, B, 6)",
+                "C = (0, 0)",
+                "D = (2, 0)",
+                "Polygon(C, D, 3)"
+            ];
+            executeCommands(commands);
+        }
+        
+        // 演示12: 彩色多边形
+        function demo12() {
+            var commands = [
+                "A1 = (-4, 2)",
+                "B1 = (-2, 2)",
+                "Polygon(A1, B1, 3)",
+                "A2 = (0, 2)",
+                "B2 = (2, 2)",
+                "Polygon(A2, B2, 4)",
+                "A3 = (-4, -2)",
+                "B3 = (-2, -2)",
+                "Polygon(A3, B3, 5)",
+                "A4 = (0, -2)",
+                "B4 = (2, -2)",
+                "Polygon(A4, B4, 6)"
             ];
             executeCommands(commands);
         }

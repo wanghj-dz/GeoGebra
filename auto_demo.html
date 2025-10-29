@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoGebra 自动化运行演示</title>
+    <script src="deployggb.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        #ggb-element {
+            margin: 20px auto;
+            display: block;
+        }
+        .demo-section {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .demo-section h3 {
+            color: #2196F3;
+            margin-top: 0;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button.secondary {
+            background-color: #2196F3;
+        }
+        button.secondary:hover {
+            background-color: #0b7dda;
+        }
+        button.danger {
+            background-color: #f44336;
+        }
+        button.danger:hover {
+            background-color: #da190b;
+        }
+        .code-display {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            border-left: 4px solid #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GeoGebra 自动化运行演示</h1>
+        <div class="description">
+            <p>点击下方按钮，代码将自动输入到GeoGebra并执行，无需手动操作</p>
+        </div>
+        
+        <div class="demo-section">
+            <h3>📐 基础图形演示</h3>
+            <div class="button-group">
+                <button onclick="demo1()">绘制抛物线 y = x²</button>
+                <button onclick="demo2()">绘制圆形</button>
+                <button onclick="demo3()">绘制正弦函数</button>
+                <button onclick="demo4()">绘制多个函数</button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🎨 几何图形演示</h3>
+            <div class="button-group">
+                <button onclick="demo5()">创建三角形</button>
+                <button onclick="demo6()">创建正方形</button>
+                <button onclick="demo7()">创建五角星</button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🔢 动态演示</h3>
+            <div class="button-group">
+                <button onclick="demo8()">动态抛物线（带滑块）</button>
+                <button onclick="demo9()">动态圆（带滑块）</button>
+                <button onclick="demo10()">函数族演示</button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🎯 综合演示</h3>
+            <div class="button-group">
+                <button onclick="demo11()">数学艺术图案</button>
+                <button onclick="demo12()">三角函数组合</button>
+                <button class="danger" onclick="clearAll()">清除所有对象</button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>📝 当前执行的代码：</h3>
+            <div class="code-display" id="code-display">等待执行...</div>
+        </div>
+        
+        <div id="ggb-element"></div>
+    </div>
+    
+    <script>
+        var ggbApp = null;
+        
+        // 初始化GeoGebra
+        window.addEventListener("load", function() {
+            var params = {
+                "appName": "graphing",
+                "width": 1000,
+                "height": 600,
+                "showToolBar": true,
+                "showAlgebraInput": true,
+                "showMenuBar": true,
+                "enableShiftDragZoom": true,
+                "enableRightClick": true,
+                "showResetIcon": true,
+                "appletOnLoad": function(api) {
+                    ggbApp = api;
+                    console.log("GeoGebra 已加载完成");
+                }
+            };
+            
+            var applet = new GGBApplet(params, true);
+            applet.inject('ggb-element');
+        });
+
+        // 显示代码
+        function showCode(code) {
+            document.getElementById('code-display').textContent = code;
+        }
+
+        // 执行GeoGebra命令
+        function executeCommands(commands) {
+            if (!ggbApp) {
+                alert("GeoGebra 还未加载完成，请稍后再试");
+                return;
+            }
+            
+            // 显示代码
+            showCode(commands.join('\n'));
+            
+            // 执行每个命令
+            commands.forEach(function(cmd) {
+                ggbApp.evalCommand(cmd);
+            });
+        }
+
+        // 演示1: 绘制抛物线
+        function demo1() {
+            var commands = [
+                "f(x) = x^2"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示2: 绘制圆形
+        function demo2() {
+            var commands = [
+                "Circle((0, 0), 3)"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示3: 绘制正弦函数
+        function demo3() {
+            var commands = [
+                "g(x) = sin(x)"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示4: 绘制多个函数
+        function demo4() {
+            var commands = [
+                "f(x) = x^2",
+                "g(x) = 2*x + 1",
+                "h(x) = -x^2 + 4"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示5: 创建三角形
+        function demo5() {
+            var commands = [
+                "A = (0, 0)",
+                "B = (4, 0)",
+                "C = (2, 3)",
+                "Polygon(A, B, C)"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示6: 创建正方形
+        function demo6() {
+            var commands = [
+                "P1 = (-2, -2)",
+                "P2 = (2, -2)",
+                "P3 = (2, 2)",
+                "P4 = (-2, 2)",
+                "Polygon(P1, P2, P3, P4)"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示7: 创建五角星
+        function demo7() {
+            var commands = [
+                "n = 5",
+                "r = 3",
+                "Star = Sequence((r*cos(2*π*k/n), r*sin(2*π*k/n)), k, 0, n-1)",
+                "Polygon(Star)"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示8: 动态抛物线（带滑块）
+        function demo8() {
+            var commands = [
+                "a = Slider(-5, 5, 0.1, 1, 150, false, true, false, false)",
+                "b = Slider(-5, 5, 0.1, 1, 150, false, true, false, false)",
+                "c = Slider(-5, 5, 0.1, 1, 150, false, true, false, false)",
+                "f(x) = a*x^2 + b*x + c"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示9: 动态圆（带滑块）
+        function demo9() {
+            var commands = [
+                "r = Slider(0.5, 10, 0.1, 1, 150, false, true, false, false)",
+                "Circle((0, 0), r)"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示10: 函数族演示
+        function demo10() {
+            var commands = [
+                "n = Slider(1, 10, 1, 1, 150, false, true, false, false)",
+                "Sequence(sin(k*x), k, 1, n)"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示11: 数学艺术图案
+        function demo11() {
+            var commands = [
+                "t = Slider(0, 2*π, 0.01, 1, 150, false, true, false, false)",
+                "Sequence((3*cos(k*t), 3*sin(k*t)), k, 1, 8)"
+            ];
+            executeCommands(commands);
+        }
+
+        // 演示12: 三角函数组合
+        function demo12() {
+            var commands = [
+                "f(x) = sin(x)",
+                "g(x) = cos(x)",
+                "h(x) = sin(x) + cos(x)",
+                "j(x) = sin(x) * cos(x)"
+            ];
+            executeCommands(commands);
+        }
+
+        // 清除所有对象
+        function clearAll() {
+            if (!ggbApp) {
+                alert("GeoGebra 还未加载完成");
+                return;
+            }
+            ggbApp.reset();
+            showCode("已清除所有对象");
+        }
+    </script>
+</body>
+</html>

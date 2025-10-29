@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoGebra 在线计算器</title>
+    <script src="deployggb.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        #ggb-element {
+            margin: 0 auto;
+            display: block;
+        }
+        .app-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .app-selector button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .app-selector button:hover {
+            background-color: #45a049;
+        }
+        .app-selector button.active {
+            background-color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GeoGebra 在线数学工具</h1>
+        <div class="description">
+            <p>强大的在线数学计算和可视化工具，支持图形、几何、3D、代数等多种模式</p>
+        </div>
+        
+        <div class="app-selector">
+            <button onclick="loadApp('graphing')" class="active" id="btn-graphing">图形计算器</button>
+            <button onclick="loadApp('geometry')" id="btn-geometry">几何</button>
+            <button onclick="loadApp('3d')" id="btn-3d">3D计算器</button>
+            <button onclick="loadApp('cas')" id="btn-cas">CAS计算器</button>
+            <button onclick="loadApp('classic')" id="btn-classic">经典版</button>
+        </div>
+        
+        <div id="ggb-element"></div>
+    </div>
+    
+    <script>
+        var currentApplet = null;
+        var currentApp = 'graphing';
+        
+        function loadApp(appName) {
+            // 更新按钮状态
+            document.querySelectorAll('.app-selector button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('btn-' + appName).classList.add('active');
+            
+            // 清空容器
+            document.getElementById('ggb-element').innerHTML = '';
+            
+            // 创建新的applet
+            var params = {
+                "appName": appName,
+                "width": 1000,
+                "height": 600,
+                "showToolBar": true,
+                "showAlgebraInput": true,
+                "showMenuBar": true,
+                "enableShiftDragZoom": true,
+                "enableRightClick": true,
+                "showResetIcon": true
+            };
+            
+            currentApplet = new GGBApplet(params, true);
+            currentApplet.inject('ggb-element');
+            currentApp = appName;
+        }
+        
+        // 页面加载时初始化
+        window.addEventListener("load", function() {
+            loadApp('graphing');
+        });
+    </script>
+</body>
+</html>
